@@ -5,6 +5,7 @@ import com.example.QRAFT.stock.dto.StockPriceResponseDto;
 import com.example.QRAFT.stock.entity.StockEntity;
 import com.example.QRAFT.stock.repository.StockRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,12 +37,17 @@ class StockServiceTest {
     }
 
     @Test
+    @DisplayName("Price타입 요청 테스트코드 ")
     void testGetClosePriceOrDailyReturns_PriceRequest() {
         // Arrange
         StockPriceRequestDto request = new StockPriceRequestDto("AAPL", LocalDate.now().minusDays(10), LocalDate.now(), "PRICE");
+
         List<StockEntity> mockStockPrices = new ArrayList<>();
+
         mockStockPrices.add(createMockStockEntity(LocalDate.now().minusDays(10), BigDecimal.valueOf(100)));
+
         mockStockPrices.add(createMockStockEntity(LocalDate.now().minusDays(9), BigDecimal.valueOf(105)));
+
         when(stockRepository.findByStockCodeAndDataDateBetween(anyString(), any(), any())).thenReturn(mockStockPrices);
 
         // Act
@@ -53,6 +59,7 @@ class StockServiceTest {
     }
 
     @Test
+    @DisplayName("Return타입 요청 테스트코드")
     void testGetClosePriceOrDailyReturns_ReturnRequest() {
         // Arrange
         StockPriceRequestDto request = new StockPriceRequestDto("AAPL", LocalDate.now().minusDays(10), LocalDate.now(), "RETURN");
@@ -70,6 +77,7 @@ class StockServiceTest {
     }
 
     @Test
+    @DisplayName("잘못된 요청 예외처리 테스트")
     void testGetClosePriceOrDailyReturns_InvalidType() {
         // Arrange
         StockPriceRequestDto request = new StockPriceRequestDto("AAPL", LocalDate.now().minusDays(10), LocalDate.now(), "INVALID");
