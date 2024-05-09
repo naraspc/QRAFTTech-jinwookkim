@@ -1,4 +1,4 @@
-package com.example.QRAFT.portfolio.controller.common.entity;
+package com.example.QRAFT.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;

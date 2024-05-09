@@ -1,12 +1,11 @@
 package com.example.QRAFT.user.entity;
 
-import com.example.QRAFT.portfolio.controller.common.entity.BaseDateEntity;
+import com.example.QRAFT.common.entity.BaseDateEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.util.UUID;
