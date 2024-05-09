@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -25,7 +26,7 @@ public class StockEntity {
     private String stockCode;
 
     @Column(nullable = false)
-    private long closePrice;
+    private BigDecimal closePrice;
 
     //요구사항 길이 26자
     @Column(nullable = false, length = 26)
@@ -33,4 +34,6 @@ public class StockEntity {
 
     @Column(nullable = false)
     private LocalDate dataDate;
+
+
 }
