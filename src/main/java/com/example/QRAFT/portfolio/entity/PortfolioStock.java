@@ -27,4 +27,9 @@ public class PortfolioStock {
     @Column(nullable = false)
     private Integer quantity;
 
+
+    // 명확한 이름으로 의도와 다른 동작을 방지하기위해 사용
+    public void setPortfolioInPortfolioStockEntity(PortfolioEntity portfolio) {
+        this.portfolio = portfolio;
+    }
 }
