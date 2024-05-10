@@ -39,18 +39,8 @@ public class StockPriceService {
 
     }
 
-    public Map<LocalDate, BigDecimal> getStockPrices(String stockCode, LocalDate startDate) {
-
-        List<StockPriceInfoEntity> stockPricesData = stockPriceRepository.findAllByStockCodeAndDataDateFromStart(stockCode, startDate);
-
-        // 일별 종가 map 형태로 가공
-        Map<LocalDate, BigDecimal> dailyPrices = new TreeMap<>();
-        stockPricesData.forEach(price -> dailyPrices.put(price.getDataDate(), price.getClosePrice()));
-
-        return dailyPrices;
-    }
-
     //더 직관적인 메소드 명은 없을까? 고민 해보자
+
     private List<StockPriceResponseDto> getClosePriceDataByPriceRequest(List<StockPriceInfoEntity> stockPrices) {
         List<StockPriceResponseDto> priceData = new ArrayList<>();
         stockPrices.forEach(stock -> priceData.add(new StockPriceResponseDto(
@@ -58,7 +48,6 @@ public class StockPriceService {
         )));
         return priceData;
     }
-
 
     private List<StockPriceResponseDto> getDailyReturnsDataByReturnRequest(List<StockPriceInfoEntity> stockPrices) {
         List<StockPriceResponseDto> returnRateData = new ArrayList<>();
@@ -78,4 +67,16 @@ public class StockPriceService {
                 .divide(previousPrice, 4, RoundingMode.HALF_UP);
     }
 
+    //포트폴리오 조회에서 사용하는 StcokPrices 조회 메소드
+    //책임의 분리를 위해 Stock도메인에 작성함
+    public Map<LocalDate, BigDecimal> getStockPrices(String stockCode, LocalDate startDate) {
+
+        List<StockPriceInfoEntity> stockPricesData = stockPriceRepository.findAllByStockCodeAndDataDateFromStart(stockCode, startDate);
+
+        // 일별 종가 map 형태로 가공
+        Map<LocalDate, BigDecimal> dailyPrices = new TreeMap<>();
+        stockPricesData.forEach(price -> dailyPrices.put(price.getDataDate(), price.getClosePrice()));
+
+        return dailyPrices;
+    }
 }
