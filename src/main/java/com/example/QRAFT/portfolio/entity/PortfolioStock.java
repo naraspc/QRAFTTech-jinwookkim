@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -14,8 +16,8 @@ import lombok.NoArgsConstructor;
 public class PortfolioStock {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "portfolio_id", nullable = false)
@@ -26,6 +28,7 @@ public class PortfolioStock {
 
     @Column(nullable = false)
     private Integer quantity;
+
 
 
     // 명확한 이름으로 의도와 다른 동작을 방지하기위해 사용

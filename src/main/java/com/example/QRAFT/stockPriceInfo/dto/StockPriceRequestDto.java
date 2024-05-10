@@ -1,4 +1,4 @@
-package com.example.QRAFT.stock.dto;
+package com.example.QRAFT.stockPriceInfo.dto;
 
 import java.time.LocalDate;
 

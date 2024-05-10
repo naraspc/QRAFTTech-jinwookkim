@@ -7,13 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Getter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 public class PortfolioEntity extends BaseDateEntity {
@@ -32,4 +33,7 @@ public class PortfolioEntity extends BaseDateEntity {
     @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PortfolioStock> stocks;
 
+    public void updateStocksInPortfolioEntity(List<PortfolioStock> stocks) {
+        this.stocks = stocks;
+    }
 }

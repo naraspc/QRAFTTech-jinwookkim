@@ -19,7 +19,7 @@ import java.util.UUID;
 public class UserEntity extends BaseDateEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @Column(nullable = false, length = 26)

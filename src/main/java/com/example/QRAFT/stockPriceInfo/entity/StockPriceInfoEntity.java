@@ -1,4 +1,4 @@
-package com.example.QRAFT.stock.entity;
+package com.example.QRAFT.stockPriceInfo.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class StockEntity {
+public class StockPriceInfoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

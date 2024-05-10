@@ -1,9 +1,9 @@
-package com.example.QRAFT.stock.service;
+package com.example.QRAFT.stockPriceInfo.service;
 
-import com.example.QRAFT.stock.dto.StockPriceRequestDto;
-import com.example.QRAFT.stock.dto.StockPriceResponseDto;
-import com.example.QRAFT.stock.entity.StockEntity;
-import com.example.QRAFT.stock.repository.StockRepository;
+import com.example.QRAFT.stockPriceInfo.dto.StockPriceRequestDto;
+import com.example.QRAFT.stockPriceInfo.dto.StockPriceResponseDto;
+import com.example.QRAFT.stockPriceInfo.entity.StockPriceInfoEntity;
+import com.example.QRAFT.stockPriceInfo.repository.StockPriceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,17 +23,17 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class StockServiceTest {
+class StockPriceServiceTest {
 
     @MockBean
-    private StockRepository stockRepository;
+    private StockPriceRepository stockPriceRepository;
     @Autowired
-    private StockService stockService;
+    private StockPriceService stockPriceService;
 
     @BeforeEach
     void setUp() {
-        stockRepository = mock(StockRepository.class);
-        stockService = new StockService(stockRepository);
+        stockPriceRepository = mock(StockPriceRepository.class);
+        stockPriceService = new StockPriceService(stockPriceRepository);
     }
 
     @Test
@@ -42,16 +42,16 @@ class StockServiceTest {
         // Arrange
         StockPriceRequestDto request = new StockPriceRequestDto("AAPL", LocalDate.now().minusDays(10), LocalDate.now(), "PRICE");
 
-        List<StockEntity> mockStockPrices = new ArrayList<>();
+        List<StockPriceInfoEntity> mockStockPrices = new ArrayList<>();
 
         mockStockPrices.add(createMockStockEntity(LocalDate.now().minusDays(10), BigDecimal.valueOf(100)));
 
         mockStockPrices.add(createMockStockEntity(LocalDate.now().minusDays(9), BigDecimal.valueOf(105)));
 
-        when(stockRepository.findByStockCodeAndDataDateBetween(anyString(), any(), any())).thenReturn(mockStockPrices);
+        when(stockPriceRepository.findByStockCodeAndDataDateBetween(anyString(), any(), any())).thenReturn(mockStockPrices);
 
         // Act
-        List<StockPriceResponseDto> result = stockService.getClosePriceOrDailyReturns(request);
+        List<StockPriceResponseDto> result = stockPriceService.getClosePriceOrDailyReturns(request);
 
         // Assert
         assertEquals(2, result.size());
@@ -63,13 +63,13 @@ class StockServiceTest {
     void testGetClosePriceOrDailyReturns_ReturnRequest() {
         // Arrange
         StockPriceRequestDto request = new StockPriceRequestDto("AAPL", LocalDate.now().minusDays(10), LocalDate.now(), "RETURN");
-        List<StockEntity> mockStockPrices = new ArrayList<>();
+        List<StockPriceInfoEntity> mockStockPrices = new ArrayList<>();
         mockStockPrices.add(createMockStockEntity(LocalDate.now().minusDays(10), BigDecimal.valueOf(100)));
         mockStockPrices.add(createMockStockEntity(LocalDate.now().minusDays(9), BigDecimal.valueOf(105)));
-        when(stockRepository.findByStockCodeAndDataDateBetween(anyString(), any(), any())).thenReturn(mockStockPrices);
+        when(stockPriceRepository.findByStockCodeAndDataDateBetween(anyString(), any(), any())).thenReturn(mockStockPrices);
 
         // Act
-        List<StockPriceResponseDto> result = stockService.getClosePriceOrDailyReturns(request);
+        List<StockPriceResponseDto> result = stockPriceService.getClosePriceOrDailyReturns(request);
 
         // Assert
         assertEquals(1, result.size());
@@ -84,14 +84,14 @@ class StockServiceTest {
 
         // Act & Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            stockService.getClosePriceOrDailyReturns(request);
+            stockPriceService.getClosePriceOrDailyReturns(request);
         });
         assertEquals("잘못된 입력 입니다. 입력한 변수 명 : INVALID", exception.getMessage());
     }
 
     // Helper method to create mock StockEntity
-    private StockEntity createMockStockEntity(LocalDate date, BigDecimal price) {
-        return StockEntity.builder()
+    private StockPriceInfoEntity createMockStockEntity(LocalDate date, BigDecimal price) {
+        return StockPriceInfoEntity.builder()
                 .stockCode("AAPL")
                 .closePrice(price)
                 .currency("USD")
